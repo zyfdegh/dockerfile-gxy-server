@@ -3,7 +3,7 @@ import MySQLdb
 
 
 class DataOperation:
-    def __init__(self, host='rdsl2pio8235hq078z91.mysql.rds.aliyuncs.com', user='secondhand', passwd='zhushijie219211l', db='secondhand', port=3306):
+    def __init__(self, host='115.159.157.48', user='secondhand', passwd='zhushijie219211l', db='secondhand', port=3306):
         self._host = host
         self._user = user
         self._passwd = passwd
