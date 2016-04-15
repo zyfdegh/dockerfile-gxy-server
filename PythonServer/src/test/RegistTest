@@ -1,0 +1,36 @@
+# coding=utf8
+import MySQLdb
+import urllib2
+import urllib
+import json
+import poster as poster
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+TEL = '15651758376'
+PASSWORD = '123456'
+LOCALHOST = '127.0.0.1'
+REMOTE = '121.43.111.75'
+
+
+
+#注册成功
+def regist_noraml():
+    opener = poster.streaminghttp.register_openers()
+    upload_url = 'http://%s:5000/register/' % LOCALHOST
+    params = {'tel': TEL, 'password': PASSWORD}
+    datagen, headers = poster.encode.multipart_encode(params)
+    request = urllib2.Request(upload_url, datagen, headers)
+    result = urllib2.urlopen(request)
+    expect_json = '{"status": "SUCCESS", "data": "8954a6705373851fce3b1257494ea824"}'
+    assert (result.read() == expect_json)
+
+# 注册失败
+def regist_failed():
+    pass
+
+
+
+if __name__ == '__main__':
+    regist_noraml()

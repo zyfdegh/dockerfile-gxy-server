@@ -1,0 +1,40 @@
+# coding=utf8
+import json
+import sys
+sys.path.append("..")
+
+from AllTaskImpll import AllTaskImpll
+from tool.DataOperation import DataOperation
+
+class AllTaskImpllNormal(AllTaskImpll):
+    def __init__(self, tag, collegeID):
+        AllTaskImpll.__init__(self, tag, collegeID)
+
+    def getAllTaskList(self):
+        sql = 'select taskID, workerID, status, userName, userTel, takeTime, toAddress, fromTime, fromAddress  ' \
+              'from workerTask where tag = %d and ' \
+              ' collegeID like \'%s\' and status = %d;' % (self._tag, self._collegeID, self._status)
+        db = DataOperation()
+        db.connect()
+        cur = db.query(sql)
+        if None == cur:
+            db.close()
+            return cur
+        allResult = cur.fetchall()
+        db.close()
+        taskList = []
+        for t in allResult:
+            task = {}
+            task['taskID'] = t[0]
+            task['workerID'] = t[1]
+            task['status'] = t[2]
+            task['userName'] = t[3]
+            task['userTel'] = t[4]
+            task['takeTime'] = str(t[5])    # post:取货时间,inspection:验货时间,get:送货时间
+            task['toAddress'] = t[6]        # 送货地点
+            task['fromTime'] = t[7]         # 取货时间
+            task['fromAddress'] = t[8]      # 取货地点，验货地点
+
+            taskList.append(task)
+
+        return taskList
