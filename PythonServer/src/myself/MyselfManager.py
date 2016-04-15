@@ -132,12 +132,12 @@ class MyselfManager(Util):
 
 if __name__ == '__main__':
     mm = MyselfManager()
-    sql = 'select * from userinfo where userID = \'202cb962ac59075b964b07152d234b70\''
+    sql = 'select * from userInfo where userID = \'202cb962ac59075b964b07152d234b70\''
     db = DataOperation()
     db.connect()
     db.close()
     tokenID = '5b38ff93107040d94a001bf08dbe3474'
-    # sql = 'select count(*) from userinfo where userName = \'anthow\';'
+    # sql = 'select count(*) from userInfo where userName = \'anthow\';'
     # cur = db.query(sql)
     # print cur.fetchone()[0]
     # print mm.getMyneeded('c09bd67618d0eafda928f07280dd4cdc')

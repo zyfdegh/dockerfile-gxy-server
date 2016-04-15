@@ -24,7 +24,7 @@ class UserManager(Util):
         self._paths = 'http://121.43.111.75:5000/static/'
 
     def createUser(self, userID, userName, password, birthday, info, portrait, account, tel, email, gender):
-        sql = 'insert into userinfo values(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', %f, \'%s\', \'%s\', %d);' % (
+        sql = 'insert into userInfo values(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', %f, \'%s\', \'%s\', %d);' % (
             userID, userName, password, birthday, info, portrait, account, tel, email, gender)
         db = DataOperation()
         db.connect()
@@ -44,7 +44,7 @@ class UserManager(Util):
     def findPassWord(self,tel,pwd):
         db = DataOperation()
         db.connect()
-        sqltel = 'select count(*) from userinfo where tel like \'%s\';' % tel
+        sqltel = 'select count(*) from userInfo where tel like \'%s\';' % tel
         cur = db.query(sqltel)
         #表明该用户并未注册，所以不存在找回密码
         if(cur == None):
@@ -53,14 +53,14 @@ class UserManager(Util):
         count = cur.fetchone()[0]
         #如果存在这个用户，就修改该条数据中的密码
         if(count > 0):
-            sqlfind = 'update userinfo set password = \'%s\' where tel like \'%s\';' % (pwd,tel)
+            sqlfind = 'update userInfo set password = \'%s\' where tel like \'%s\';' % (pwd,tel)
             db.operate(sqlfind)
             db.close()
             return True
     def createUserQuickly(self, tel, pwd):
         db = DataOperation()
         db.connect()
-        sqltel = 'select count(*) from userinfo where tel like \'%s\';' % tel
+        sqltel = 'select count(*) from userInfo where tel like \'%s\';' % tel
         cur = db.query(sqltel)
         if cur == None:
             db.close()
@@ -73,7 +73,7 @@ class UserManager(Util):
         userID = self.getMD5String(tel)
         userName = tel[0:3] + '****' + tel[-4:]
         portrait = 'default_portrait.png'
-        sql = 'insert into userinfo(userID, password, tel, userName, portraitPath) values(\'%s\',\'%s\',\'%s\', \'%s\', \'%s\');' % (userID, pwd, tel, userName, portrait)
+        sql = 'insert into userInfo(userID, password, tel, userName, portraitPath) values(\'%s\',\'%s\',\'%s\', \'%s\', \'%s\');' % (userID, pwd, tel, userName, portrait)
         db.operate(sql)
         db.close()
         return userID
@@ -81,7 +81,7 @@ class UserManager(Util):
     # 根据电话和密码来查找用户是否存在
     def searchUser(self, tel, pwd):
         userID = self.getMD5String(tel)
-        sql = 'select userID,userName,portraitPath,tel from userinfo where userID like \'%s\' and password like \'%s\';' % (
+        sql = 'select userID,userName,portraitPath,tel from userInfo where userID like \'%s\' and password like \'%s\';' % (
             userID, pwd)
         db = DataOperation()
         db.connect()
@@ -115,7 +115,7 @@ class UserManager(Util):
         if 'error' == json.loads(valid)['status']:
             return False
         sql = 'select userName, birthday, info, portraitPath, account, tel, email, gender, residence '\
-              'from userinfo where userID like \'%s\';' % userID
+              'from userInfo where userID like \'%s\';' % userID
         db = DataOperation()
         db.connect()
         cur = db.query(sql)
@@ -156,7 +156,7 @@ class UserManager(Util):
             userID = self.getUserIDByToken(tokenID)
             db = DataOperation()
             db.connect()
-            sql = 'select userID,userName,birthday,info,portraitPath,account,tel,email,gender,residence from userinfo where userID like \'%s\';' % userID
+            sql = 'select userID,userName,birthday,info,portraitPath,account,tel,email,gender,residence from userInfo where userID like \'%s\';' % userID
             # cur.fetchone()--->内容如下
             # ('202cb962ac59075b964b07152d234b70', 'anthow', '123', None, 'student', 'D_pic.jpg2015-07-09 20:20:17', None, '15062225371', None, 1)
             cur = db.query(sql)
@@ -201,12 +201,12 @@ class UserManager(Util):
             db.connect()
 
             if isfile == '0':
-                sql = 'update userinfo set gender = %d,userName = \'%s\', info = \'%s\',residence=\'%s\' where userID like \'%s\';' % \
+                sql = 'update userInfo set gender = %d,userName = \'%s\', info = \'%s\',residence=\'%s\' where userID like \'%s\';' % \
                       (gender, userName, info, residence, userID)
                 db.operate(sql)
                 db.close()
                 return True
-            sql = 'update userinfo set portraitPath = \'%s\' ,gender = %d,userName = \'%s\', info = \'%s\',residence=\'%s\' where userID like \'%s\';' % \
+            sql = 'update userInfo set portraitPath = \'%s\' ,gender = %d,userName = \'%s\', info = \'%s\',residence=\'%s\' where userID like \'%s\';' % \
                   (filename, gender, userName, info, residence, userID)
             db.operate(sql)
             db.close()
@@ -220,7 +220,7 @@ class UserManager(Util):
         res = json.loads(tokenManager.isTokenValidity(tokenID))
         if res['status'] == 'success' and res['data'] == True:
             userID = self.getUserIDByToken(tokenID)
-            sql = 'select account from userinfo where userID like \'%s\';' % userID
+            sql = 'select account from userInfo where userID like \'%s\';' % userID
             db = DataOperation()
             db.connect()
             cur = db.query(sql)
@@ -241,7 +241,7 @@ class UserManager(Util):
 
         if res['status'] == 'success' and res['data'] == True:
             userID = self.getUserIDByToken(tokenID)
-            sql = 'update userinfo set account = \'%s\' where userID like \'%s\';' % (account, userID)
+            sql = 'update userInfo set account = \'%s\' where userID like \'%s\';' % (account, userID)
             db = DataOperation()
             db.connect()
             db.operate(sql)
@@ -257,7 +257,7 @@ if __name__ == '__main__':
     #             'ci20083333@126.com', 0)
     # m.searchUser('15062225371','12dddd34')
     # m.createUserQuickly('111','111')
-    # sqltem = 'select userName , portraitPath from userinfo where userID like \'%s\';' % '1234'
+    # sqltem = 'select userName , portraitPath from userInfo where userID like \'%s\';' % '1234'
     # db = DataOperation()
     # db.connect()
     # cur = db.query(sqltem)

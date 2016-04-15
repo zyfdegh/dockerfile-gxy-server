@@ -147,7 +147,7 @@ class RequirementManager(Util):
 
         sql = 'select requirementID, requirement.info, requirement.userID, requirement.merchandiseTypeID, userName, ' \
               'merchandiseTypeName, portraitPath, publishedTime ' \
-              'from requirement, userinfo, merchandiseType ' \
+              'from requirement, userInfo, merchandiseType ' \
               'where requirement.userID = userInfo.userID ' \
               'and requirement.merchandiseTypeID = merchandiseType.merchandiseTypeID ' \
               'and requirement.info like \'%%%s%%\' ' \

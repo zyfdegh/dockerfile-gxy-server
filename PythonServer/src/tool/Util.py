@@ -39,7 +39,7 @@ class Util:
         return result[0]
 
     def getUserNameByUserID(self,userID):
-        sql = 'select userName from userinfo where userID like \'%s\';' %userID
+        sql = 'select userName from userInfo where userID like \'%s\';' %userID
         db = DataOperation()
         db.connect()
         cur = db.query(sql)
@@ -49,7 +49,7 @@ class Util:
         return result[0]
 
     def getUserIDByUserName(self,userName):
-        sql = 'select userID from userinfo where userName like \'%s\';' %userName
+        sql = 'select userID from userInfo where userName like \'%s\';' %userName
         db = DataOperation()
         db.connect()
         cur = db.query(sql)

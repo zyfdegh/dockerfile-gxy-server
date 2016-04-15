@@ -42,7 +42,7 @@ class FavoriteManager(Util):
             sql = 'select favoriteID, favorite.merchandiseID, postedMerchandise.userID, timeAndDate, ' \
                   'portraitPath, userName, currentPrice, oldPrice, postedMerchandise.info, ' \
                   'imgPath.path from favorite, userInfo, postedMerchandise, imgPath' \
-                  ' where postedMerchandise.userID = userinfo.userID and favorite.merchandiseID= postedMerchandise.merchandiseID' \
+                  ' where postedMerchandise.userID = userInfo.userID and favorite.merchandiseID= postedMerchandise.merchandiseID' \
                   ' and postedMerchandise.merchandiseID = imgPath.merchandiseID and favorite.userID like \'%s\';' % userID
             print sql
             cur = db.query(sql)

@@ -75,7 +75,7 @@ class MerchandiseManager(Util):
         db = DataOperation()
         db.connect()
 
-        sql = 'select * from collegeinfo'
+        sql = 'select * from collegeInfo'
         cur = db.query(sql)
         if None == cur:
             db.close()
@@ -95,7 +95,7 @@ class MerchandiseManager(Util):
         db = DataOperation()
         db.connect()
 
-        sql = 'select * from sorttype'
+        sql = 'select * from sortType'
         cur = db.query(sql)
         if None == cur:
             db.close()
@@ -418,20 +418,20 @@ class MerchandiseManager(Util):
         if 'success' == islogin:
             sql = 'select merchandise.merchandiseID, merchandise.merchandiseName, merchandise.currentPrice, merchandise.oldPrice, merchandise.visitedCount, ' \
                    'merchandise.userID, merchandise.info, merchandise.publishedTime, merchandise.swap, merchandise.autoShipment, merchandise.inspection, merchandise.college, ' \
-                   'merchandise.merchandiseTypeID, merchandise.matching, merchandise.recommendation, path, userinfo.userName, userinfo.portraitPath, ' \
+                   'merchandise.merchandiseTypeID, merchandise.matching, merchandise.recommendation, path, userInfo.userName, userInfo.portraitPath, ' \
                    'residence,merchandise.shipmentPrice,collegeInfo.collegeName from merchandise, imgPath, ' \
-                   'userinfo, collegeInfo where merchandise.college = collegeInfo.collegeID and ' \
-                   'userinfo.userID = merchandise.userID and imgPath.merchandiseID = merchandise.merchandiseID and merchandise.merchandiseID = \'%s\';' % merchandiseID
+                   'userInfo, collegeInfo where merchandise.college = collegeInfo.collegeID and ' \
+                   'userInfo.userID = merchandise.userID and imgPath.merchandiseID = merchandise.merchandiseID and merchandise.merchandiseID = \'%s\';' % merchandiseID
             addressManager = AddressManager()
             resultInfo = addressManager.searchAddressDefaultDetail(tokenID)
             favorite = '0'
         else:
             sql = 'select merchandise.merchandiseID, merchandise.merchandiseName, merchandise.currentPrice, merchandise.oldPrice, merchandise.visitedCount, ' \
                   'merchandise.userID, merchandise.info, merchandise.publishedTime, merchandise.swap, merchandise.autoShipment, merchandise.inspection, merchandise.college, ' \
-                  'merchandise.merchandiseTypeID, merchandise.matching, merchandise.recommendation, path, userinfo.userName, userinfo.portraitPath, ' \
+                  'merchandise.merchandiseTypeID, merchandise.matching, merchandise.recommendation, path, userInfo.userName, userInfo.portraitPath, ' \
                   'residence,merchandise.shipmentPrice, collegeInfo.collegeName from merchandise, imgPath, ' \
-                  'userinfo, collegeInfo where merchandise.college = collegeInfo.collegeID and ' \
-                  'userinfo.userID = merchandise.userID and imgPath.merchandiseID = merchandise.merchandiseID and merchandise.merchandiseID = \'%s\';' % merchandiseID  
+                  'userInfo, collegeInfo where merchandise.college = collegeInfo.collegeID and ' \
+                  'userInfo.userID = merchandise.userID and imgPath.merchandiseID = merchandise.merchandiseID and merchandise.merchandiseID = \'%s\';' % merchandiseID  
             # userID = self.getUserIDByToken(tokenID)
             resultInfo = 'Not found'
         db = DataOperation()
@@ -623,7 +623,7 @@ class MerchandiseManager(Util):
 
     # 获取排序方式
     def getSortType(self):
-        sql = 'select * from SortType;'
+        sql = 'select * from sortType;'
         db = DataOperation()
         db.connect()
         cur = db.query(sql)
@@ -646,7 +646,7 @@ class MerchandiseManager(Util):
 
     # 获取商品分类
     def getMerchandiseType(self):
-        sql = 'select * from MerchandiseType;'
+        sql = 'select * from merchandiseType;'
         db = DataOperation()
         db.connect()
         cur = db.query(sql)
@@ -701,10 +701,10 @@ class MerchandiseManager(Util):
         islogin = json.loads(valid)['status']
         db = DataOperation()
         db.connect()
-        sql = 'select merchandiselist.merchandiseID,merchandiselist.merchandiseName,currentPrice,oldPrice,visitedCount,userinfo.userName,' \
+        sql = 'select merchandiselist.merchandiseID,merchandiselist.merchandiseName,currentPrice,oldPrice,visitedCount,userInfo.userName,' \
               'merchandiselist.info,publishedTime,swap,autoShipment,inspection,college,merchandiseType,' \
-              'matching,recommendation,city,imgPath,userinfo.portraitPath,favorite,shipmentPrice,userinfo.userID ' \
-              'from merchandiselist,userinfo,imgPath where userinfo.userName =  merchandiselist.userName ' \
+              'matching,recommendation,city,imgPath,userInfo.portraitPath,favorite,shipmentPrice,userInfo.userID ' \
+              'from merchandiselist,userInfo,imgPath where userInfo.userName =  merchandiselist.userName ' \
               'and imgPath.merchandiseID = merchandiselist.merchandiseID and imgPath.path = merchandiselist.imgPath and ' \
               'merchandiseName like \'%%%s%%\' or merchandiselist.info like \'%%%s%%\' group by merchandiselist.merchandiseID,merchandiselist.imgPath;' % (merchandiseName,merchandiseName)
         cur = db.query(sql)
