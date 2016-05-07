@@ -28,7 +28,7 @@ from PIL import Image
 app = Flask(__name__)
 
 # 定义一个上传文件的全局路径
-UPLOAD_FOLDER = '/opt/Secondhand/Server/Server/src/static'
+UPLOAD_FOLDER = '/usr/local/PythonServer/src/static'
 # UPLOAD_FOLDER = 'static'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
