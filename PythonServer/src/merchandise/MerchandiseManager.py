@@ -1,5 +1,6 @@
 # coding=utf8
 import sys
+import logging
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -165,16 +166,19 @@ class MerchandiseManager(Util):
             sqlImg = 'insert into imgPath(imgPathID, path, merchandiseID) values(\'%s\', \'%s\', \'%s\');' \
                      % (self.generateID(img), img, merchandiseID)
             sqlList.append(sqlImg)
+	    logging.warning("img before: %s",sqlImg);
         sql = 'insert into merchandise(merchandiseID, merchandiseName, currentPrice, oldPrice, userID, info,' \
               ' publishedTime, swap, inspection, college, merchandiseTypeID, matching, recommendation, city) values(' \
               ' \'%s\', \'%s\', %f, %f, \'%s\', \'%s\', \'%s\', %s, %s, \'%s\', \'%s\', %s, %s, \'%s\');' % \
               (merchandiseID, title, price, incomePrice, userID, description, currentTime, swap,
                inspection, college, merchandiseTypeID, matching, recommendation, city)
         db = DataOperation()
+	logging.warning("sql back:%s",sql)
         db.connect()
         sqlList.append(sql)
-
-        db.multiOperate(sqlList)
+	logging.warning("sql back 2:%s",sqlList)
+        a = db.multiOperate(sqlList)
+	logging.warning("sql back 3:%s",a)
         db.close()
 
         return merchandiseID

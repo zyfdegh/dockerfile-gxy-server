@@ -1,7 +1,7 @@
 # coding=utf8
 import json
 import sys
-
+import logging
 sys.path.append("..")
 from tool.Util import Util
 from tool.DataOperation import DataOperation
@@ -82,14 +82,21 @@ class MyselfManager(Util):
         valid = self.isTokenValidity(tokenID)
         if 'error' == json.loads(valid)['status']:
             return False
-
+	logging.warning("getMypost valid 2222 %s",valid)
         merchandiseManager = MerchandiseManager()
+	logging.warning("getMypost valid 3333 %s",valid)
         userID = self.getUserIDByToken(tokenID)
+	logging.warning("getMypost valid 4444 %s",valid)
         resultlist = merchandiseManager.getPostMerchandiseList(userID)
-        '''db = DataOperation()
+	logging.warning("getMypost valid 5555 %s",valid)
+        db = DataOperation()
+	logging.warning("getMypost valid 6666 %s",valid)
         db.connect()
-        sqlmid = 'select merchandiseID from  postedmerchandise where userID like \'%s\';' % userID
+	logging.warning("getMypost valid 7777 %s",valid)
+        sqlmid = 'select merchandiseID from  postedMerchandise where userID like \'%s\';' % userID
+	logging.warning("getMypost %s",sqlmid)
         cur = db.query(sqlmid)
+	logging.warning("getMypost cur %s",cur)
         if cur == None:
             return False
         mid = cur.fetchall()
@@ -99,7 +106,7 @@ class MyselfManager(Util):
             result = merchandiseManager.getMerchandiseDetail(tokenID, merchandiseID)
             print(mid)
             print(result)
-            resultlist.append(result)'''
+            resultlist.append(result)
 
         return resultlist
 

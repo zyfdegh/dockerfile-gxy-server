@@ -4,6 +4,7 @@ import os.path
 from flask import Flask, request, url_for
 from address.AddressManager import AddressManager
 import sys
+import logging
 
 sys.path.append('..')
 
@@ -207,6 +208,7 @@ def add_express():
     data['data'] = 'NULL'
     if request.method == 'POST':
         expressInfo = request.form['data']
+	logging.warning("add_express %s",expressInfo)
         expressID = expressManager.createExpress(expressInfo)
         if False == expressID:
             data['data'] = 'Bad tokenID'
@@ -315,7 +317,8 @@ def upload():
     HEIGHT = 240
     if request.method == 'POST':
         jsonInfo = request.form['data']
-        (ret, tokenID, userID) = userManager.getUserInfo(jsonInfo)
+        logging.warning("%s",jsonInfo)
+	(ret, tokenID, userID) = userManager.getUserInfo(jsonInfo)
 
         isfile = request.form['isFile']
         if isfile == '1':
@@ -328,6 +331,7 @@ def upload():
                 newfilepath = newfilepath + '.' + filePostPix[-1]
                 # 将上传的高清大图放到hd_portrait目录下
                 newfilepathorign = 'portrait/%s/hd_portrait/%s' % (userID, newfilepath)
+		logging.warning("%s",os.path.join(app.config['UPLOAD_FOLDER'], newfilepathorign))
                 imgfile.save(os.path.join(app.config['UPLOAD_FOLDER'], newfilepathorign))
                 # 生成一份缩略图
                 thumbnailpath = 'portrait/%s/thumbnail_portrait/%s' % (userID, newfilepath)
@@ -1072,7 +1076,9 @@ def get_my_post():
     myselfManager = MyselfManager()
     if request.method == 'POST':
         tokenID = request.form['tokenID']
+	logging.warning("get_my_post %s",tokenID)
         postInfo = myselfManager.getMypost(tokenID)
+	logging.warning("get_my_post %s",postInfo)
         if postInfo != None and postInfo != False:
             resultData['status'] = 'SUCCESS'
             resultData['data'] = postInfo

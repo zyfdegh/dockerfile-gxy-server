@@ -1,6 +1,6 @@
 # coding=utf8
 import sys
-
+import logging
 sys.path.append('..')
 from tool.DataOperation import DataOperation
 from tool.Util import Util
@@ -12,7 +12,7 @@ class ExpressManager(Util):
         pass
 
     def createExpress(self, jsonExpressInfo):
-
+	logging.warning("expressManager %s",jsonExpressInfo)
         expressInfo = json.loads(jsonExpressInfo)
         tokenID = expressInfo['tokenID']
 

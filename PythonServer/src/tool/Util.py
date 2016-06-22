@@ -1,6 +1,6 @@
 # coding=utf8
 import sys
-
+import logging
 sys.path.append('..')
 import hashlib
 import time
@@ -69,6 +69,7 @@ class Util:
             result['status'] = 'error'
             result['data'] = 'INVALID TOKENID'
             db.close()
+	    logging.warning("Utils %s",result['status'])
             return json.dumps(result)
         else:
             sql = 'select timestampdiff(DAY,\'%s\',now());' % createtime
@@ -77,13 +78,14 @@ class Util:
             db.close()
             result = {}
             result['status'] = 'success'
-
+	    logging.warning("Utils %s",result['status'])
             if timeDiff[0] >= 30:
                 result['data'] = False
                 return json.dumps(result)
             else:
                 result['data'] = True
                 return json.dumps(result)
+	logging.warning("Utils %s",result['status'])
 
     def generateID(self, value):
         currentTime = self.getCurrentTime()

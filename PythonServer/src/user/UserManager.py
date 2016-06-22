@@ -21,7 +21,7 @@ class UserManager(Util):
         os.environ.setdefault('rongcloud_app_secret', app_secret)
         logging.basicConfig(level=logging.INFO)
         self._ryapi = ApiClient()
-        self._paths = 'http://121.43.111.75:5000/static/'
+        self._paths = 'http://localhost:5000/static/'
 
     def createUser(self, userID, userName, password, birthday, info, portrait, account, tel, email, gender):
         sql = 'insert into userInfo values(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', %f, \'%s\', \'%s\', %d);' % (
@@ -33,8 +33,9 @@ class UserManager(Util):
 
     def getUserInfo(self, jsonInfo):
         params = json.loads(jsonInfo)
-        tokenID = params['token']
-        valid = self.isTokenValidity(tokenID)
+        tokenID = params['tokenID']
+        logging.warning("%s",tokenID)
+	valid = self.isTokenValidity(tokenID)
 
         if 'error' == json.loads(valid)['status']:
             return (False, tokenID, tokenID)
